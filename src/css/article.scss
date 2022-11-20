@@ -1,0 +1,37 @@
+@use "mixinUtil" as mixins;
+@use "vars";
+
+.main-article {
+	--main-article-transform : translate3d(0, calc(var(--scrollTop / -7.5)), 0);
+	min-height               : 100vh;
+	background-size          : cover;
+	background-position      : center;
+	color                    : vars.$textColor;
+	@include mixins.centralize();
+	text-align               : center;
+	position                 : relative;
+}
+
+.main-article__header {
+	text-transform : uppercase;
+	@include mixins.fontTextStyle(1.8, 7.5);
+	transform      : var(--main-article-transform);
+	transition     : var(--transition);
+	will-change    : transform;
+}
+
+.main-article__paragraph {
+	max-width   : calc(var(--font-index) * 30);
+	font-size   : calc(var(--font-index) * .9);
+	margin-top  : calc(var(--font-index) / 1.25);
+	transform   : var(--main-article-transform);
+	transition  : var(--transition);
+	will-change : transform;
+}
+
+.copy {
+	position : absolute;
+	bottom   : calc(var(--font-index) * 2.5);
+	opacity  : 45%;
+	@include mixins.fontTextStyle(0.75, 37.5);
+}

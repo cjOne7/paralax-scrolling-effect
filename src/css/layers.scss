@@ -1,0 +1,84 @@
+@use "mixinUtil" as mixins;
+@use "vars";
+
+.main-header {
+	position : relative;
+
+	&::after {
+		content             : "";
+		position            : absolute;
+		z-index             : 100;
+		width               : 100%;
+		height              : calc(var(--font-index) * 10);
+		background-image    : url(../../img/ground.png);
+		background-size     : cover;
+		background-repeat   : no-repeat;
+		background-position : center;
+		bottom              : calc(var(--font-index) * -4.5);
+	}
+}
+
+.layers {
+	height     : 100vh;
+	@include mixins.centralize();
+	text-align : center;
+	// need to union two pictures while scrolling and hide parts of other layers
+	overflow   : hidden;
+	position   : relative;
+}
+
+.layer {
+	height              : 100%;
+	width               : 100%;
+	position            : absolute;
+	background-size     : cover;
+	background-position : center;
+	// need for browser to determine to pay more attention on this property
+	will-change         : transform;
+	z-index             : 2;
+	transition          : var(--transition);
+}
+
+/**
+	with vars translate3d(0, 0, 0) it has the same behaviour as without, but if y-dimension
+	while scrolling will be dynamically changed on the same value on which have been scrolled it returns
+	Exm. scrolling ↓ on 50px and @var --scrollTop is also 50px, then translateY(var(--scrollTop))
+ */
+
+$scrollTop : var(--scrollTop);
+.layers__base {
+	transform : translate3d(0, calc($scrollTop / 1.6), 0);
+	z-index   : 0;
+}
+
+.layers__middle {
+	transform : translate3d(0, calc($scrollTop / 2.5), 0);
+}
+
+.layers__front {
+	transform : translate3d(0, calc($scrollTop / 5.7), 0);
+}
+
+.layer__header {
+	z-index        : 1;
+	transform      : translate3d(0, calc($scrollTop / 2), 0);
+	transition     : var(--transition);
+	will-change    : transform;
+	text-transform : uppercase;
+	font-weight    : 900;
+	margin-top     : calc(var(--font-index) * -6.5);
+	color          : vars.$textColor;
+	text-shadow    : 0 0 15px #c79b2f;
+	//width          : min(60%, 1024px);
+	width          : 60%;
+	max-width      : 720px;
+}
+
+
+.layers__caption {
+	@include mixins.fontTextStyle(0.9, 3.5);
+}
+
+.layers__title {
+	@include mixins.fontTextStyle(2.5, 2.25);
+}

@@ -1,0 +1,10 @@
+@mixin centralize() {
+	display         : flex;
+	align-items     : center;
+	justify-content : center;
+}
+
+@mixin fontTextStyle($fontSize, $letterSpacing) {
+	font-size      : calc(var(--font-index) * $fontSize);
+	letter-spacing : calc(var(--font-index) / $letterSpacing);
+}
